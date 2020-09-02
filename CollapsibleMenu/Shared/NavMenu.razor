@@ -1,0 +1,70 @@
+﻿<div class="top-row pl-4 navbar navbar-dark">
+    <a class="navbar-brand" href="">CollapsibleMenu</a>
+    <button class="navbar-toggler" @onclick="ToggleNavMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</div>
+
+<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <ul class="nav flex-column">
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="" @onclick="()=>ToggleSubMenu(0)" Match="NavLinkMatch.All">
+                <span class="oi oi-home" aria-hidden="true"></span> Home
+            </NavLink>
+            @if (expandSubNav[0])
+            {
+                <NavLink  class="nav-link" href="/sub1">
+                    <span style="margin-left: 15px;" class="oi oi-plus" aria-hidden="true">Sub1</span>
+                </NavLink>
+                <NavLink class="nav-link" href="/sub2">
+                    <span style="margin-left: 15px;" class="oi oi-plus" aria-hidden="true">Sub2</span>
+                </NavLink>
+            }
+        </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="/counter" @onclick="()=>ToggleSubMenu(1)">
+                <span class="oi oi-home" aria-hidden="true"></span> Counter
+            </NavLink>
+            @if (expandSubNav[1])
+            {
+                <NavLink class="nav-link" href="/sub3">
+                    <span style="margin-left: 15px;" class="oi oi-plus" aria-hidden="true">Sub3</span>
+                </NavLink>
+                <NavLink class="nav-link" href="/sub4">
+                    <span style="margin-left: 15px;" class="oi oi-plus" aria-hidden="true">Sub4</span>
+                </NavLink>
+            }
+        </li>
+       
+    </ul>
+</div>
+
+@code {
+    private bool collapseNavMenu = true;
+
+
+    private bool[] expandSubNav = new bool[2];
+
+    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void ToggleSubMenu(int index)
+    {
+        for (int i = 0; i < expandSubNav.Length; i++)
+        {
+            if (i != index)
+            {
+                expandSubNav[i] = false;
+            }
+            else
+            {
+                expandSubNav[i] = true;
+            }
+        }
+
+    }
+}
